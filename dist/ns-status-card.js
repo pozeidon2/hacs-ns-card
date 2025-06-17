@@ -118,7 +118,12 @@ class NsStatusCard extends HTMLElement {
 
         let delay = '';
 
-        if (attributes.departure_delay == true) {
+        // Check if train is cancelled
+		if (attributes.status.toLowerCase() === 'cancelled' || attributes.going === false) {
+			delay = `Rijdt niet`;
+		}
+		// Else check for delay
+		else if (attributes.departure_delay == true) {
             var startTime = new Date('2013/10/09 ' + attributes.departure_time_planned);
             var startTime = new Date('2013/10/09 ' + attributes.departure_time_planned);
             var startTime = new Date('2013/10/09 ' + attributes.departure_time_planned);
@@ -136,7 +141,10 @@ class NsStatusCard extends HTMLElement {
         let timeAgo = timeSince(state.last_updated, translation);
 
         let platform = '';
-        if (attributes.departure_platform_actual) {
+        if (attributes.status.toLowerCase() === 'cancelled' || attributes.going === false) {
+			platform = `-`;
+		}
+        else if (attributes.departure_platform_actual) {
             platform = attributes.departure_platform_actual;
         }
 
